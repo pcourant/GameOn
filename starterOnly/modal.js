@@ -14,6 +14,7 @@ const formData = document.querySelectorAll(".formData");
 
 // DOM bground Elements
 const closeBg = document.querySelector(".close");
+const submitBg = document.querySelector(".btn-submit");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -21,14 +22,17 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // close modal event
 closeBg.addEventListener("click", closeModal);
 
+// check validation form
+// submitBg.addEventListener("click", submitBg);
+
 // launch modal form
-function launchModal() {
+function launchModal(event) {
   // add display class to display the form pop-up
   modalbg.classList.add("bground--displayed");
 }
 
 // close modal form
-function closeModal() {
+function closeModal(event) {
   // remove display class to close the form pop-up
   modalbg.classList.remove("bground--displayed");
 }
