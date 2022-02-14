@@ -106,83 +106,25 @@ function closeModal(event) {
 
 // Add input control validation on event "change"
 for (const input of inputs) {
-  // input.element.addEventListener("change", function (event) {
-  //   if (!input.element.validity.valid) {
-  //     input.element.setCustomValidity("");
-  //     input.element.parentNode.setAttribute("data-error", input.messageInvalid);
-  //     input.element.parentNode.setAttribute("data-error-visible", "true");
-  //   } else {
-  //     // It's vital to set the message to an empty string if there are no errors
-  //     // As long as the error message is not empty, the form will not pass validation and will not be submitted.
-  //     // input.setCustomValidity("");
-  //     input.element.parentNode.removeAttribute("data-error");
-  //     input.element.parentNode.removeAttribute("data-error-visible");
-  //   }
-  // });
-  // input.element.addEventListener("invalid", function (event) {
-  //   if (!input.element.validity.valid) {
-  //     // input.element.setCustomValidity("");
-  //     // input.element.reportValidity();
-  //     input.element.parentNode.setAttribute("data-error", input.messageInvalid);
-  //     input.element.parentNode.setAttribute("data-error-visible", "true");
-  //   } else {
-  //     // It's vital to set the message to an empty string if there are no errors
-  //     // As long as the error message is not empty, the form will not pass validation and will not be submitted.
-  //     // input.setCustomValidity("");
-  //     input.element.parentNode.removeAttribute("data-error");
-  //     input.element.parentNode.removeAttribute("data-error-visible");
-  //   }
-  // });
+  input.element.addEventListener("change", function (e) {
+    if (!input.element.validity.valid) {
+      input.element.parentNode.setAttribute("data-error", input.messageInvalid);
+      input.element.parentNode.setAttribute("data-error-visible", "true");
+    } else {
+      input.element.parentNode.removeAttribute("data-error");
+      input.element.parentNode.removeAttribute("data-error-visible");
+    }
+  });
+  input.element.addEventListener("invalid", function (e) {
+    // prevent display of browser popup
+    e.preventDefault();
 
-  input.element.addEventListener(
-    "change",
-    (function () {
-      return function (e) {
-        //prevent the browser from showing default error bubble / hint
-        e.preventDefault();
-
-        if (!input.element.validity.valid) {
-          input.element.parentNode.setAttribute(
-            "data-error",
-            input.messageInvalid
-          );
-          input.element.parentNode.setAttribute("data-error-visible", "true");
-        } else {
-          // It's vital to set the message to an empty string if there are no errors
-          // As long as the error message is not empty, the form will not pass validation and will not be submitted.
-          // input.setCustomValidity("");
-          input.element.parentNode.removeAttribute("data-error");
-          input.element.parentNode.removeAttribute("data-error-visible");
-        }
-      };
-    })(),
-    true
-  );
-
-  input.element.addEventListener(
-    "invalid",
-    (function () {
-      return function (e) {
-        //prevent the browser from showing default error bubble / hint
-        e.preventDefault();
-
-        if (!input.element.validity.valid) {
-          // input.element.setCustomValidity("");
-          // input.element.reportValidity();
-          input.element.parentNode.setAttribute(
-            "data-error",
-            input.messageInvalid
-          );
-          input.element.parentNode.setAttribute("data-error-visible", "true");
-        } else {
-          // It's vital to set the message to an empty string if there are no errors
-          // As long as the error message is not empty, the form will not pass validation and will not be submitted.
-          // input.setCustomValidity("");
-          input.element.parentNode.removeAttribute("data-error");
-          input.element.parentNode.removeAttribute("data-error-visible");
-        }
-      };
-    })(),
-    true
-  );
+    if (!input.element.validity.valid) {
+      input.element.parentNode.setAttribute("data-error", input.messageInvalid);
+      input.element.parentNode.setAttribute("data-error-visible", "true");
+    } else {
+      input.element.parentNode.removeAttribute("data-error");
+      input.element.parentNode.removeAttribute("data-error-visible");
+    }
+  });
 }
