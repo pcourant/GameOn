@@ -1,3 +1,4 @@
+/**************************** FUNCTIONS DECLARATION ***********************/
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -6,6 +7,36 @@ function editNav() {
     x.className = "topnav";
   }
 }
+
+// Launch modal form by changing CSS class
+function launchModal(event) {
+  modalbg.classList.toggle("bground--displayed");
+}
+
+// Close modal form by changing CSS class
+function closeModal(event) {
+  modalbg.classList.toggle("bground--displayed");
+}
+
+let checkValidityOnEvent = function (event, input) {
+  // Add input control validation on events "change"
+  input.element.addEventListener(event, function (e) {
+    // prevent display of browser original popup
+    e.preventDefault();
+
+    if (!input.element.validity.valid) {
+      //Si l'input est INVALID
+      input.element.parentNode.setAttribute("data-error", input.messageInvalid);
+      input.element.parentNode.setAttribute("data-error-visible", "true");
+    } else {
+      input.element.parentNode.removeAttribute("data-error");
+      input.element.parentNode.removeAttribute("data-error-visible");
+    }
+  });
+};
+
+/***************************************************************/
+/**************************** VARIABLES ***********************/
 
 // DOM Elements
 const modalbg = document.querySelector(".bground");
@@ -16,7 +47,7 @@ const formData = document.querySelectorAll(".formData");
 const closeBg = document.querySelector(".close");
 const submitBg = document.querySelector(".btn-submit");
 
-// INPUT items
+// DOM input objects
 const firstName = {
   element: document.getElementById("first"),
   messageInvalid:
@@ -83,48 +114,26 @@ const inputs = [
   checkbox1,
 ];
 
-// launch modal event
+/******************************************************************/
+/**************************** JS EXECUTION ***********************/
+
+// Launch modal event listener
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// close modal event
+// Close modal event listener
 closeBg.addEventListener("click", closeModal);
 
-// check validation form
-// submitBg.addEventListener("click", submitBg);
-
-// launch modal form
-function launchModal(event) {
-  // add display class to display the form pop-up
-  modalbg.classList.add("bground--displayed");
-}
-
-// close modal form
-function closeModal(event) {
-  // remove display class to close the form pop-up
-  modalbg.classList.remove("bground--displayed");
-}
-
-// Add input control validation on event "change"
+// FORM validation
 for (const input of inputs) {
-  input.element.addEventListener("change", function (e) {
-    if (!input.element.validity.valid) {
-      input.element.parentNode.setAttribute("data-error", input.messageInvalid);
-      input.element.parentNode.setAttribute("data-error-visible", "true");
-    } else {
-      input.element.parentNode.removeAttribute("data-error");
-      input.element.parentNode.removeAttribute("data-error-visible");
-    }
-  });
-  input.element.addEventListener("invalid", function (e) {
-    // prevent display of browser popup
-    e.preventDefault();
-
-    if (!input.element.validity.valid) {
-      input.element.parentNode.setAttribute("data-error", input.messageInvalid);
-      input.element.parentNode.setAttribute("data-error-visible", "true");
-    } else {
-      input.element.parentNode.removeAttribute("data-error");
-      input.element.parentNode.removeAttribute("data-error-visible");
-    }
-  });
+  checkValidityOnEvent("change", input);
+  checkValidityOnEvent("invalid", input);
 }
+
+// Add input control validation on event "invalid"
+document.querySelector("form").addEventListener("submit", function (e) {
+  // prevent display of browser original popup
+  console.log(e);
+
+  // Stop browser from reload windows
+  e.preventDefault();
+});
