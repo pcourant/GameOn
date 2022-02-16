@@ -56,11 +56,16 @@
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
-            <form
+            <!-- <form
               name="reserve"
               action="index.html"
               method="get"
               onsubmit="return validate();"
+            > -->
+            <form
+              name="reserve"
+              action="index.html"
+              method="get"
             >
               <div
                 class="formData">
@@ -71,6 +76,7 @@
                   id="first"
                   name="first"
                   minlength="2"
+                  maxlength="32"
                   required
                 /><br>
               </div>
@@ -83,6 +89,7 @@
                   id="last"
                   name="last"
                   minlength="2"
+                  maxlength="32"
                   required
                 /><br>
               </div>
@@ -94,6 +101,8 @@
                   type="email"
                   id="email"
                   name="email"
+                  minlength="3"
+                  maxlength="64"
                   required
                 /><br>
               </div>
@@ -105,6 +114,8 @@
                   type="date"
                   id="birthdate"
                   name="birthdate"
+                  min="1900-01-01" 
+                  max="2020-01-01"
                   required
                 /><br>
               </div>
@@ -226,6 +237,13 @@
                 value="C'est parti"
               />
             </form>
+          </div>
+          <!-- The modal confirmation message -->
+          <div id="modal-body-confirm">
+            <p id="confirm-msg">
+                Merci pour votre inscription ! 
+              </p>
+              <button class="btn-close button">Fermer</button>
           </div>
         </div>
       </div>

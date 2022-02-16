@@ -10,12 +10,21 @@ function editNav() {
 
 // Launch modal form by changing CSS class
 function launchModal(event) {
-  modalbg.classList.toggle("bground--displayed");
+  modalbg.classList.add("bground--displayed");
 }
 
 // Close modal form by changing CSS class
 function closeModal(event) {
-  modalbg.classList.toggle("bground--displayed");
+  // Clear inputs and error messages
+  for (const input of inputs) {
+    input.element.value = "";
+    input.element.parentNode.removeAttribute("data-error");
+    input.element.parentNode.removeAttribute("data-error-visible");
+  }
+
+  // Become invisible
+  modalbg.classList.remove("bground--displayed");
+  modalBgConfirm.classList.remove("confirm-displayed");
 }
 
 let checkValidityOnEvent = function (event, input) {
@@ -40,11 +49,13 @@ let checkValidityOnEvent = function (event, input) {
 
 // DOM Elements
 const modalbg = document.querySelector(".bground");
+const modalBgConfirm = document.getElementById("modal-body-confirm");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
 // DOM bground Elements
 const closeBg = document.querySelector(".close");
+const closeBgButton = document.querySelector(".btn-close");
 const submitBg = document.querySelector(".btn-submit");
 
 // DOM input objects
@@ -122,6 +133,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // Close modal event listener
 closeBg.addEventListener("click", closeModal);
+closeBgButton.addEventListener("click", closeModal);
 
 // FORM validation
 for (const input of inputs) {
@@ -129,10 +141,13 @@ for (const input of inputs) {
   checkValidityOnEvent("invalid", input);
 }
 
-// Add input control validation on event "invalid"
+// Send Form via API request and display acknoledgment message
 document.querySelector("form").addEventListener("submit", function (e) {
-  // prevent display of browser original popup
-  console.log(e);
+  // Send API request ...
+  // POST https://gameon.api...
+
+  // Display acknoledgment message
+  modalBgConfirm.classList.add("confirm-displayed");
 
   // Stop browser from reload windows
   e.preventDefault();

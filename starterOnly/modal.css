@@ -194,6 +194,50 @@ main {
   margin: 15px auto;
 }
 
+/* The modal body for confirmation */
+#modal-body-confirm {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #232323;
+
+  /* Inital state : invisible on below modal */
+  opacity: 0;
+  z-index: -1;
+
+  padding: 15px 8%;
+  margin: 15px auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Final state : visible and on top */
+#modal-body-confirm.confirm-displayed {
+  opacity: 1;
+  z-index: 1;
+}
+
+#confirm-msg {
+  display: block;
+
+  /* Shift to the bottom of the available space to center it */
+  margin-top: auto;
+
+  /* Styles from figma */
+  font-size: 36px;
+  font-weight: normal;
+  line-height: 142.6%;
+  padding: 50px;
+  text-align: center;
+}
+
 label {
   font-family: var(--font-default);
   font-size: 17px;
@@ -206,6 +250,7 @@ input {
   border: 0.8px solid #ccc;
   outline: none;
 }
+
 .text-control {
   margin: 0;
   padding: 8px;
@@ -316,6 +361,9 @@ input[data-error]::after {
   opacity: 1;
   cursor: pointer;
   transform: scale(0.7);
+
+  /* Display the close icon on top of all layers */
+  z-index: 2;
 }
 .close:before,
 .close:after {
@@ -333,7 +381,8 @@ input[data-error]::after {
   transform: rotate(-45deg);
 }
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.btn-close {
   background: #fe142f;
   display: block;
   margin: 0 auto;
@@ -344,6 +393,12 @@ input[data-error]::after {
   cursor: pointer;
   border: 0;
 }
+
+.btn-close {
+  /* Shift the button to the bottom of the flexbox */
+  margin-top: auto;
+}
+
 /* custom select styles */
 .custom-select {
   position: relative;
