@@ -16,10 +16,12 @@ function launchModal(event) {
 // Close modal form by changing CSS class
 function closeModal(event) {
   // Clear inputs and error messages
-  for (const input of inputs) {
-    input.element.value = "";
-    input.element.parentNode.removeAttribute("data-error");
-    input.element.parentNode.removeAttribute("data-error-visible");
+  for (const input in inputs) {
+    if (inputs[input].element !== null) {
+      inputs[input].element.value = "";
+      inputs[input].element.parentNode.removeAttribute("data-error");
+      inputs[input].element.parentNode.removeAttribute("data-error-visible");
+    }
   }
 
   // Become invisible
@@ -28,21 +30,58 @@ function closeModal(event) {
 }
 
 let checkValidityOnEvent = function (event, input) {
-  // Add input control validation on events "change"
-  input.element.addEventListener(event, function (e) {
-    // prevent display of browser original popup
-    e.preventDefault();
+  if (input.element !== null) {
+    // Add input control validation on events "change"
+    input.element.addEventListener(event, function (e) {
+      // prevent display of browser original popup
+      e.preventDefault();
 
-    if (!input.element.validity.valid) {
-      //Si l'input est INVALID
-      input.element.parentNode.setAttribute("data-error", input.messageInvalid);
-      input.element.parentNode.setAttribute("data-error-visible", "true");
-    } else {
-      input.element.parentNode.removeAttribute("data-error");
-      input.element.parentNode.removeAttribute("data-error-visible");
-    }
-  });
+      if (!input.element.validity.valid) {
+        //Si l'input est INVALID
+        input.element.parentNode.setAttribute(
+          "data-error",
+          input.messageInvalid
+        );
+        input.element.parentNode.setAttribute("data-error-visible", "true");
+      } else {
+        input.element.parentNode.removeAttribute("data-error");
+        input.element.parentNode.removeAttribute("data-error-visible");
+      }
+    });
+  }
 };
+
+// Validate function called on onsubmit event when form is submitted
+function validate() {
+  // Stop browser from reload windows
+  this.event.preventDefault();
+
+  let nbInputsChecked = 0;
+
+  let myForm = document.getElementById("reserve");
+  // Prepopulate formData with values from the form
+  let myFormData = new FormData(myForm);
+  // Note: Only successful form controls are included in a FormData object
+
+  // Check all for inputs
+  for (let pair of myFormData) {
+    let value = pair[1];
+    let key = pair[0];
+    if (!(typeof value === inputs[key].type && inputs[key].regex.test(value))) {
+      console.log(key + ", " + value);
+      this.event.stopImmediatePropagation();
+      return false;
+    }
+    nbInputsChecked++;
+  }
+
+  if (nbInputsChecked < nbOfInputsToCheck) {
+    this.event.stopImmediatePropagation();
+    return false;
+  }
+
+  return true;
+}
 
 /***************************************************************/
 /**************************** VARIABLES ***********************/
@@ -63,22 +102,41 @@ const firstName = {
   element: document.getElementById("first"),
   messageInvalid:
     "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
+  type: "string",
+  regex: /.{2,32}/,
 };
 const lastName = {
   element: document.getElementById("last"),
   messageInvalid: "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
+  type: "string",
+  regex: /.{2,32}/,
 };
 const email = {
   element: document.getElementById("email"),
   messageInvalid: "Veuillez entrer un email valide : jean.dupont@email.com",
+  type: "string",
+  // RFC2822 Email Validation from regexr.com
+  regex:
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
 };
 const birthdate = {
   element: document.getElementById("birthdate"),
   messageInvalid: "Vous devez entrer votre date de naissance.",
+  type: "string",
+  // valid birthdate (YYYY-MM-DD)
+  regex: /(\d{4})-(\d{2})-(\d{2})/,
 };
 const quantity = {
   element: document.getElementById("quantity"),
   messageInvalid: "Vous devez entrer un nombre entre 0 et 99.",
+  type: "string",
+  regex: /[1-9]|[1-9]\d/,
+};
+const location0 = {
+  element: null,
+  messageInvalid: null,
+  type: "string",
+  regex: /(New York)|(San Francisco)|(Seattle)|(Chicago)|(Boston)|(Portland)/,
 };
 const location1 = {
   element: document.getElementById("location1"),
@@ -108,22 +166,26 @@ const checkbox1 = {
   element: document.getElementById("checkbox1"),
   messageInvalid:
     "Vous devez vérifier que vous acceptez les termes et conditions.",
+  type: "string",
+  regex: /on/,
 };
 
-const inputs = [
-  firstName,
-  lastName,
-  email,
-  birthdate,
-  quantity,
-  location1,
-  location2,
-  location3,
-  location4,
-  location5,
-  location6,
-  checkbox1,
-];
+const nbOfInputsToCheck = 7;
+const inputs = {
+  first: firstName,
+  last: lastName,
+  email: email,
+  birthdate: birthdate,
+  quantity: quantity,
+  location: location0,
+  location1: location1,
+  location2: location2,
+  location3: location3,
+  location4: location4,
+  location5: location5,
+  location6: location6,
+  checkbox1: checkbox1,
+};
 
 /******************************************************************/
 /**************************** JS EXECUTION ***********************/
@@ -136,19 +198,15 @@ closeBg.addEventListener("click", closeModal);
 closeBgButton.addEventListener("click", closeModal);
 
 // FORM validation
-for (const input of inputs) {
-  checkValidityOnEvent("change", input);
-  checkValidityOnEvent("invalid", input);
+for (const input in inputs) {
+  checkValidityOnEvent("change", inputs[input]);
+  checkValidityOnEvent("invalid", inputs[input]);
 }
 
-// Send Form via API request and display acknoledgment message
 document.querySelector("form").addEventListener("submit", function (e) {
   // Send API request ...
   // POST https://gameon.api...
 
   // Display acknoledgment message
   modalBgConfirm.classList.add("confirm-displayed");
-
-  // Stop browser from reload windows
-  e.preventDefault();
 });
