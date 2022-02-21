@@ -69,6 +69,11 @@ img {
   color: #fe142f;
 }
 
+img {
+  height: auto;
+  width: auto;
+}
+
 @media screen and (max-width: 1200px) {
   .main-navbar {
     padding-left: 20%;
