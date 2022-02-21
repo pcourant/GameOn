@@ -32,7 +32,7 @@ img {
 
 .topnav {
   overflow: hidden;
-  margin: 3.5%;
+  margin: 3.5% 2%;
 }
 .header-logo {
   float: left;
@@ -66,26 +66,57 @@ img {
 
 .topnav .icon {
   display: none;
+  color: #fe142f;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
+  .main-navbar {
+    padding-left: 20%;
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .main-navbar {
+    padding-left: 0;
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .main-navbar {
+    margin-top: 0;
+  }
+  #myTopnav {
+    padding-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  img {
+    height: 40px;
+  }
+
   .topnav a {
     display: none;
+    font-size: 30px;
   }
   .topnav a.icon {
     float: right;
     display: block;
+    margin-top: -15px;
   }
-}
 
-@media screen and (max-width: 768px) {
   .topnav.responsive {
     position: relative;
+  }
+  .topnav.responsive .main-navbar {
+    margin-top: 40px;
   }
   .topnav.responsive .icon {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 20px;
   }
   .topnav.responsive a {
     float: none;
@@ -94,14 +125,31 @@ img {
   }
 }
 
-@media screen and (max-width: 540px) {
-  .topnav a {
-    display: none;
+@media screen and (max-width: 730px) {
+  img {
+    height: 30px;
   }
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
+
+  .topnav.responsive .main-navbar {
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  img {
+    height: 20px;
+  }
+  .topnav.responsive .main-navbar {
+    margin-top: 20px;
+  }
+  .topnav a {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  img {
+    height: 20px;
   }
 }
 
@@ -110,8 +158,6 @@ main {
   font-weight: bolder;
   color: black;
   padding-top: 0.5vw;
-  padding-left: 2vw;
-  padding-right: 2vw;
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
@@ -187,6 +233,29 @@ main {
   position: relative;
   color: #fff;
   padding-top: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  main {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .bground {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: inherit;
+  }
+
+  .content {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .hero-section.hero-section--hidden {
+    display: none;
+  }
 }
 
 .modal-body {
@@ -281,12 +350,6 @@ input {
   border: 2px solid #e54858;
 }
 
-/* 
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -486,7 +549,7 @@ input[data-error]::after {
   color: #fff;
   position: relative;
   text-align: left;
-  min-width: 424px;
+  min-width: 350px;
 }
 .hero-content::after {
   content: "";
@@ -544,6 +607,19 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+
+@media screen and (max-width: 1000px) {
+  .hero-headline {
+    font-size: 5.5rem;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .hero-headline {
+    font-size: 5rem;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .hero-section {
     display: block;
@@ -567,6 +643,7 @@ footer {
   .hero-text {
     width: unset;
     font-size: 1.5rem;
+    margin-top: 47px;
   }
   .hero-img img {
     border-radius: 10px;
@@ -580,6 +657,45 @@ footer {
   .copyrights {
     margin-top: 50px;
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .hero-headline {
+    font-size: 3.5rem;
+  }
+  .hero-text {
+    font-size: 1.3rem;
+    margin-top: 33px;
+  }
+  .hero-content {
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .hero-headline {
+    font-size: 3rem;
+  }
+  .hero-text {
+    font-size: 1rem;
+    margin-top: 27px;
+  }
+  .hero-content {
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .hero-headline {
+    font-size: 2.5rem;
+  }
+  .hero-text {
+    font-size: 0.8rem;
+    margin-top: 17px;
+  }
+  .hero-content {
+    padding: 10px;
   }
 }
 

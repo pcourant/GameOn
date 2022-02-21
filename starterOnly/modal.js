@@ -11,6 +11,7 @@ function editNav() {
 // Launch modal form by changing CSS class
 function launchModal(event) {
   modalbg.classList.add("bground--displayed");
+  heroSection.classList.add("hero-section--hidden");
 }
 
 // Close modal form by changing CSS class
@@ -27,6 +28,7 @@ function closeModal(event) {
   // Become invisible
   modalbg.classList.remove("bground--displayed");
   modalBgConfirm.classList.remove("confirm-displayed");
+  heroSection.classList.remove("hero-section--hidden");
 }
 
 let checkValidityOnEvent = function (event, input) {
@@ -87,6 +89,7 @@ function validate() {
 /**************************** VARIABLES ***********************/
 
 // DOM Elements
+const heroSection = document.querySelector(".hero-section");
 const modalbg = document.querySelector(".bground");
 const modalBgConfirm = document.getElementById("modal-body-confirm");
 const modalBtn = document.querySelectorAll(".modal-btn");
