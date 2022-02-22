@@ -135,36 +135,6 @@ const quantity = {
   type: "string",
   regex: /[1-9]|[1-9]\d/,
 };
-const location0 = {
-  element: null,
-  messageInvalid: null,
-  type: "string",
-  regex: /(New York)|(San Francisco)|(Seattle)|(Chicago)|(Boston)|(Portland)/,
-};
-const location1 = {
-  element: document.getElementById("location1"),
-  messageInvalid: "Vous devez choisir un tournoi.",
-};
-const location2 = {
-  element: document.getElementById("location2"),
-  messageInvalid: "Vous devez choisir un tournoi.",
-};
-const location3 = {
-  element: document.getElementById("location3"),
-  messageInvalid: "Vous devez choisir un tournoi.",
-};
-const location4 = {
-  element: document.getElementById("location4"),
-  messageInvalid: "Vous devez choisir un tournoi.",
-};
-const location5 = {
-  element: document.getElementById("location5"),
-  messageInvalid: "Vous devez choisir un tournoi.",
-};
-const location6 = {
-  element: document.getElementById("location6"),
-  messageInvalid: "Vous devez choisir un tournoi.",
-};
 const checkbox1 = {
   element: document.getElementById("checkbox1"),
   messageInvalid:
@@ -173,6 +143,25 @@ const checkbox1 = {
   regex: /on/,
 };
 
+const location0 = {
+  element: null,
+  messageInvalid: null,
+  type: "string",
+  regex: /(New York)|(San Francisco)|(Seattle)|(Chicago)|(Boston)|(Portland)/,
+};
+
+const locationRadios = [
+  ...Array(document.querySelectorAll("input[name=location]").length).keys(),
+].reduce((acc, curr) => {
+  return {
+    ...acc,
+    [`location${curr + 1}`]: {
+      element: document.getElementById(`location${curr + 1}`),
+      messageInvalid: "Vous devez choisir un tournoi.",
+    },
+  };
+}, {});
+
 const nbOfInputsToCheck = 7;
 const inputs = {
   first: firstName,
@@ -180,14 +169,9 @@ const inputs = {
   email: email,
   birthdate: birthdate,
   quantity: quantity,
-  location: location0,
-  location1: location1,
-  location2: location2,
-  location3: location3,
-  location4: location4,
-  location5: location5,
-  location6: location6,
   checkbox1: checkbox1,
+  location: location0,
+  ...locationRadios,
 };
 
 /******************************************************************/
