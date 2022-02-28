@@ -16,10 +16,12 @@ function launchModal(event) {
 
 // Close modal form by changing CSS class
 function closeModal(event) {
-  // Clear inputs and error messages
+  // reset form
+  document.getElementById("reserve").reset();
+
+  // Clear error messages
   for (const input in inputs) {
     if (inputs[input].element !== null) {
-      inputs[input].element.value = "";
       inputs[input].element.parentNode.removeAttribute("data-error");
       inputs[input].element.parentNode.removeAttribute("data-error-visible");
     }
@@ -69,18 +71,14 @@ function validate() {
   for (let pair of myFormData) {
     let value = pair[1];
     let key = pair[0];
-    if (!(typeof value === inputs[key].type && inputs[key].regex.test(value))) {
-      console.log(key + ", " + value);
-      console.log(
-        "typeof value === inputs[key].type",
-        typeof value === inputs[key].type
-      );
-      console.log(
-        "inputs[key].regex.test(value)",
-        inputs[key].regex.test(value)
-      );
-      this.event.stopImmediatePropagation();
-      return false;
+    if (inputs[key] !== undefined) {
+      if (
+        !(typeof value === inputs[key].type && inputs[key].regex.test(value))
+      ) {
+        console.log(key + ", " + value);
+        this.event.stopImmediatePropagation();
+        return false;
+      }
     }
     nbInputsChecked++;
   }
