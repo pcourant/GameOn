@@ -71,6 +71,14 @@ function validate() {
     let key = pair[0];
     if (!(typeof value === inputs[key].type && inputs[key].regex.test(value))) {
       console.log(key + ", " + value);
+      console.log(
+        "typeof value === inputs[key].type",
+        typeof value === inputs[key].type
+      );
+      console.log(
+        "inputs[key].regex.test(value)",
+        inputs[key].regex.test(value)
+      );
       this.event.stopImmediatePropagation();
       return false;
     }
