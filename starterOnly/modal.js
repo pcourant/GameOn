@@ -112,13 +112,13 @@ const firstName = {
   messageInvalid:
     "Veuillez entrer 2 caractères ou plus pour le champ du prénom.",
   type: "string",
-  regex: /.{2,32}/,
+  regex: /[a-zA-Z]{2,32}/,
 };
 const lastName = {
   element: document.getElementById("last"),
   messageInvalid: "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
   type: "string",
-  regex: /.{2,32}/,
+  regex: /[a-zA-Z]{2,32}/,
 };
 const email = {
   element: document.getElementById("email"),
